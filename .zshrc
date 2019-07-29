@@ -326,3 +326,4 @@ alias gh="open \`git remote -v | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 
 alias gpl="git pull --rebase --autostash"
 alias git-frwd="git checkout HEAD@{1}"
 alias git-tree="git log --graph --oneline --all"
+alias config='/usr/bin/git --git-dir=/Users/andreatitton/.cfg/ --work-tree=/Users/andreatitton'
