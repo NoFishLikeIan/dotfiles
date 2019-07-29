@@ -1,0 +1,205 @@
+{
+  "For_Loop": {
+    "prefix": "forin",
+    "body": ["for (const ${2:element} of ${1:array}) {", "\t$0", "}"],
+    "description": "For Loop"
+  },
+  "Mobx store width listener": {
+    "prefix": "mstlistensize",
+    "body": [
+      ".actions(self => ({",
+      "  computeSize() {",
+      "    self.widthPage = window.innerWidth",
+      "    self.heightPage = window.innerHeight",
+      "  },",
+      "}))",
+      ".actions(self => ({",
+      "  afterCreate() {",
+      "    self.computeSize()",
+      "    window.addEventListener('resize', debounce(self.computeSize, 50))",
+      "},",
+      "}))"
+    ]
+  },
+  "Async Mobx Fetch": {
+    "prefix": "mstfetch",
+    "body": [
+      ".actions(self => ({",
+      "  fetchDataset: flow(function* fetchDataset() {",
+      "    self.${1:dataset} = []",
+      "    self.fetchStatus = 'pending'",
+      "    try {",
+      "        self.${1:dataset} = yield ${2:fetchingFunction()}",
+      "        self.fetchStatus = 'done'",
+      "    } catch (error) {",
+      "        console.error('Failed to fetch projects', error)",
+      "        self.fetchStatus = 'error'",
+      "    }",
+      "  })",
+      "}))"
+    ]
+  },
+  "Scale": {
+    "prefix": "scale",
+    "body": [
+      "import {scaleLinear} from 'd3-scale'",
+      "scaleLinear().range([${1:min}, ${2:max}])"
+    ]
+  },
+  "React": {
+    "prefix": "rcc",
+    "body": [
+      "import React from 'react'",
+      "",
+      "export class ${TM_FILENAME_BASE} extends React.Component {",
+      "\trender() {",
+      "\t\treturn <></>",
+      "\t}",
+      "}"
+    ],
+    "description": "React import and class setup"
+  },
+  "React-MST": {
+    "prefix": "mstrcc",
+    "body": [
+      "import React from 'react'",
+      "import { inject, observer } from 'mobx-react'",
+      "",
+      "@inject('${1:global}')",
+      "@observer",
+      "export class ${TM_FILENAME_BASE} extends React.Component {",
+      "\trender() {",
+      "\t\treturn <></>",
+      "\t}",
+      "}"
+    ],
+    "description": "React import and class setup with mst"
+  },
+  "Holy-Trinity": {
+    "prefix": "imptrinity",
+    "scope": "python",
+    "body": [
+      "import numpy as np",
+      "import pandas as pd",
+      "import matplotlib.pyplot as plt",
+      "",
+      "import seaborn as sns",
+      "sns.set()"
+    ]
+  },
+  "Python logger": {
+    "prefix": "log",
+    "scope": "python",
+    "body": [
+      "# Setup logger, install with `pip install loguru`",
+      "from loguru import logger",
+      "logger.add('${1:${TM_FILENAME_BASE}}.log', format='{time} {level} - {message}', level='INFO', retention='${2:10 days}')"
+    ]
+  },
+  "ifmain": {
+    "prefix": "ifmain",
+    "scope": "python",
+    "body": ["if __name__ == '__main__':", "    ${1}"]
+  },
+  "List comprehansion": {
+    "prefix": "lc",
+    "scope": "python",
+    "body": "[${3}${1:element} for ${1:element} in ${2:iteratable}]"
+  },
+  "List comprehansion filter": {
+    "prefix": "lcfilter",
+    "scope": "python",
+    "body": "[${1:element} for ${1:element} in ${2:iteratable} if ${1:element} ${3}]"
+  },
+  "List comprehansion ternario": {
+    "prefix": "lcifelse",
+    "scope": "python",
+    "body": "[${1:element} if ${2:condition} else ${3:newvalue} for ${1:element} in ${4:iteratable}]"
+  },
+  "Breakpoint": {
+    "prefix": "brp",
+    "scope": "python",
+    "body": "breakpoint()"
+  },
+  "Flask server": {
+    "prefix": "server-flask",
+    "scope": "python",
+    "body": [
+      "import os",
+      "from dotenv import load_dotenv",
+      "from flask import Flask, jsonify",
+      "from flask_cors import CORS",
+      "",
+      "# .env variables",
+      "load_dotenv()",
+      "PORT = os.getenv('PORT', 5000)",
+      "DEBUG = os.getenv('DEBUG', False)",
+      "HOST = os.getenv('HOST', '0.0.0.0')",
+      "THREADED = os.getenv('THREADED', False)",
+      "",
+      "app = Flask(__name__)",
+      "CORS(app)",
+      "",
+      "@app.route('/')",
+      "def home():",
+      "    return 'You are online!'",
+      "",
+      "if __name__ == '__main__':",
+      "    app.run(port=PORT, debug=DEBUG, host=HOST, threaded=THREADED)"
+    ]
+  },
+
+  "globalStore": {
+    "prefix": "mstglb",
+    "scope": "typescriptreact",
+    "body": [
+      "import { types as t } from 'mobx-state-tree'",
+      "",
+      "export const GlobalState = t.model('globalState', {})",
+      "",
+      "export const globalState = GlobalState.create({})",
+      "",
+      "export type GlobalStateType = typeof GlobalState.Type",
+      "",
+      "export interface IGlobalStateable {globalState?: GlobalStateType}"
+    ]
+  },
+
+  "newStore": {
+    "prefix": "mststore",
+    "scope": "typescriptreact",
+    "body": [
+      "import { types as t } from 'mobx-state-tree'",
+      "",
+      "export const ${1:${TM_FILENAME_BASE}} = t",
+      ".model('${TM_FILENAME_BASE}', {})",
+      "",
+      "export type ${1:${TM_FILENAME_BASE}}Type = typeof ${1:${TM_FILENAME_BASE}}.Type"
+    ]
+  },
+  "tsReact": {
+    "prefix": "tsrcc",
+    "scope": "typescriptreact",
+    "body": [
+      "import * as React from 'react'",
+      "import { inject, observer } from 'mobx-react'",
+      "",
+      "import { IGlobalStateable } from '${1:../stores/global}'",
+      "",
+      "interface Props extends IGlobalStateable {}",
+      "",
+      "@inject('globalState')",
+      "@observer",
+      "export class ${TM_FILENAME_BASE} extends React.Component<Props> {",
+      "  render() {",
+      "    return <></>",
+      "  }",
+      "}"
+    ]
+  },
+  "initClass": {
+    "prefix": "definit",
+    "scope": "python",
+    "body": ["def __init__(self${1:,}):", "    return"]
+  }
+}

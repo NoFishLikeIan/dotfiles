@@ -1,0 +1,47 @@
+{
+  "globalStore": {
+    "prefix": "mstglb",
+    "body": [
+      "import { types as t } from 'mobx-state-tree'",
+      "",
+      "export const GlobalState = t.model('globalState', {})",
+      "",
+      "export const globalState = GlobalState.create({})",
+      "",
+      "export type GlobalState = typeof GlobalState.Type",
+      "",
+      "export interface IGlobalStateable {globalState?: GlobalStateType}"
+    ]
+  },
+
+  "newStore": {
+    "prefix": "mststore",
+    "body": [
+      "import { types as t } from 'mobx-state-tree'",
+      "",
+      "export const ${1:${TM_FILENAME_BASE}} = t",
+      ".model('${TM_FILENAME_BASE}', {})",
+      "",
+      "export type ${1:${TM_FILENAME_BASE}} = typeof ${1:${TM_FILENAME_BASE}}.Type"
+    ]
+  },
+  "tsReact": {
+    "prefix": "tsrcc",
+    "body": [
+      "import * as React from 'react'",
+      "import { inject, observer } from 'mobx-react'",
+      "",
+      "import { IGlobalStateable } from '${1:../stores/global}'",
+      "",
+      "interface Props extends IGlobalStateable {}",
+      "",
+      "@inject('globalState')",
+      "@observer",
+      "export class ${TM_FILENAME_BASE} extends React.Component<Props> {",
+      "  render() {",
+      "    return <></>",
+      "  }",
+      "}"
+    ]
+  }
+}
